@@ -16,8 +16,8 @@ f.close()
 # Split into sentences
 sentences = re.compile("\.|\n").split(essay)
 
+shuffledsentences = []
 for sentence in sentences:
-
-    print(tr.translateshuffle(sentence, 'en', 'de', key))
-
+        sentence = tr.translateshuffle(sentence, 'en', 'de', key)
+        shuffledsentences.append(sentence)
 
