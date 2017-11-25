@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import json
-from fakemydata.generate_data import generate_data as gd
+from fakemydata.generate_data import generate_data
 
 app = Flask(__name__)
 
@@ -17,9 +17,9 @@ def fakemydata():
     #numberofdatapoints
     #noiselevel - a value between 0 and 1, as determined by user on a sliding scale
     #idealcurvecode - python code for y
-    json = gd(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode)
+    data_json = generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode)
     #json is a list of lists (each sublist has one x and one y in it)
-    return json, render_template('fakemydata.html')
+    return data_json, render_template('fakemydata.html')
 
 @app.route('/inputview')
 def inputview():
@@ -31,12 +31,14 @@ def sentenceview():
 
 @app.route('/plagiarise', methods = ['POST'])
 def plagiarise():
+
     essay = request.data
-    shuffledessay = plagiarise_with_translation
+    shuffledessay = plagiarise_with_translation(essay)
 
-    #convert esssay to json file
+    #convert essay to json file
+    essay_json = json.dumps(shuffledessay)
 
-    return json
+    return essay_json
 
 if __name__ == '__main__':
     app.run(debug=True)
