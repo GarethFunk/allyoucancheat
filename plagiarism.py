@@ -4,7 +4,7 @@ Master file for running the entire project
 import re
 import googletranslate.translate_shuffle_functions as tr
 
-#Read in key
+#Read in key.txt
 f = open('key.txt', 'r')
 key = f.read()
 f.close()
@@ -22,9 +22,18 @@ essay = essay.replace("p.1", "p1").replace("p.2", "p2").replace("p.3", "p3").rep
 sentences = re.compile("\.|\n").split(essay)
 
 #Translate into french and back again
+
 shuffledsentences = []
 for sentence in sentences:
-        sentence = tr.translateshuffle(sentence, 'en', 'fr', key)
-        shuffledsentences.append(sentence)
-        print(sentence)
+    sentence = tr.translateshuffle(sentence, 'en', 'fr', key, 'nmt')
+    shuffledsentences.append(sentence)
+    print(sentence)
+    
+    '''
 
+shuffledsentences = []
+for sentence in sentences:
+    sentence = tr.translateshuffleflexible(sentence, 'en', 'ru', 'es', 'fr', key, 'base', 'nmt')
+    shuffledsentences.append(sentence)
+    print(sentence)
+'''
