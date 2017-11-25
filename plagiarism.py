@@ -24,7 +24,7 @@ sentences = re.compile("\.|\n").split(essay)
 #Translate into french and back again
 shuffledsentences = []
 for sentence in sentences:
-        sentence = tr.translateshuffle(sentence, 'en', 'de', key)
+        sentence = tr.translateshuffle(sentence, 'en', 'fr', key)
         shuffledsentences.append(sentence)
         print(sentence)
 
