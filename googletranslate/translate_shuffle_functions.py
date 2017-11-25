@@ -23,7 +23,7 @@ def translate(text, langin, langout, key):
 
 def translateshuffle(text, langin, langout, key):
 
-    translatedtext = translate(text, langin, langout)
-    shuffledtext = translate(translatedtext, langout, langin)
+    translatedtext = translate(text, langin, langout, key)
+    shuffledtext = translate(translatedtext, langout, langin, key)
 
     return shuffledtext
