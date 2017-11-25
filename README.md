@@ -1,0 +1,2 @@
+# plagiarism
+Plagiarism avoidance software.
