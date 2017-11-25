@@ -1,2 +1,2 @@
-# plagiarism
+# allyoucancheat
 Plagiarism avoidance software.
