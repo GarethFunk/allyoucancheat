@@ -24,3 +24,8 @@
 .container-fluid {
   height: 80vh;
 }
+
+.fa-vc {
+  color: #ffffff;
+  margin-right: 16px;
+}

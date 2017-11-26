@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 from fakemydata.generate_data import generate_data
+from plagiarise_with_translation import plagiarise_with_translation
 
 app = Flask(__name__)
 
@@ -21,18 +22,14 @@ def fakemydata():
     #json is a list of lists (each sublist has one x and one y in it)
     return data_json, render_template('fakemydata.html')
 
-@app.route('/inputview')
-def inputview():
-    return render_template('inputview.html')
-
 @app.route('/sentenceview')
 def sentenceview():
     return render_template('sentenceview.html')
 
-@app.route('/plagiarise', methods = ['POST'])
+@app.route('/plagiarise', methods=['POST'])
 def plagiarise():
 
-    essay = request.data
+    essay = request.form["essay"]
     shuffledessay = plagiarise_with_translation(essay)
 
     #convert essay to json file

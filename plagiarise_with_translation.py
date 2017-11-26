@@ -1,12 +1,15 @@
 import re
 import googletranslate.translate_shuffle_functions as tr
 
+# Read in key.txt
+f = open('key.txt', 'r')
+key = f.read()
+f.close()
+
+
 def plagiarise_with_translation(essay):
 
-    #Read in key.txt
-    f = open('key.txt', 'r')
-    key = f.read()
-    f.close()
+    global key
 
     #Preprocessing
     essay = essay.replace(".\"", "\".").replace("...", ".").replace("etc.", "etc").replace(" e.g.", ":").replace("i.e.", ":").replace("St.", "St")
