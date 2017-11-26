@@ -1,3 +1,5 @@
+import random
+
 from nltk.corpus import wordnet as wn
 from nltk.stem.wordnet import WordNetLemmatizer
 if __name__ != "__main__":
@@ -20,6 +22,7 @@ def syn(word, code='NN'):
                     pos = wn.NOUN
             except IndexError:
                 pos = wn.NOUN
+            word = wnl.lemmatize(word, 'n')
         elif code[0] == "J":
             pos = wn.ADJ
             word = wnl.lemmatize(word, 'a') # Change it to the lemmatized form
@@ -32,13 +35,8 @@ def syn(word, code='NN'):
     if pos != "":
         print("Lemmatized word: " + word)
         synset = wn.synsets(word, pos)
-        lemmata = []
-        for syn in synset:
-            for lem in syn.lemmas():
-                lemmata.append({'name': lem.name(), 'count':lem.count(), 'syn':syn})
         # Pick a lemma somehow
-        print(lemmata)
-        lemma = __lemmaPicker(word, lemmata)
+        lemma = __lemmaPicker(word, synset)
         print("Chosen new word: " + str(lemma))
         # Inflect the word again
         new_word = __inflector(lemma['name'], pos, code)
@@ -71,24 +69,54 @@ def __inflector(word, pos, code):
         new_word = word
     return new_word
 
-def __lemmaPicker(word, lemmata):
-    default = {'name': word, 'count':-1, 'syn':""}
-    if len(lemmata) == 0:
-        chosen = default
+def __lemmaPicker(word, synset):
+    syn = __synsetPicker(word, synset)
+    if syn is False:
+        chosen_lemma = {'name':word, 'syn':""}
+    else:
+        # We got a synset so now pick a lemma from it
+        lemmas = syn[0].lemmas()
+        num = len(lemmas)
+        total_count = 0
+        for lem in lemmas:
+            total_count += lem.count()
+        if(total_count == 0):
+            chosen_lemma = {'name':word, 'syn':syn}
+        else:
+            selecta = random.randint(1, total_count)
+            run_tot = 0
+            for lem in lemmas:
+                run_tot += lem.count()
+                if run_tot >= selecta:
+                    # Choose this one
+                    chosen_lemma =  {'name':lem.name(), 'syn':syn}
+                    break
+    return chosen_lemma
+
+
+def __synsetPicker(word, synset):
+    # Rank each synset by its count for the lemma we searched for
+    synset_ranks = []
+    for syn in synset:
+        for lem in syn.lemmas():
+            if lem.name() == word:
+                synset_ranks.append((syn, lem.count()))
+    if len(synset_ranks) == 0:
+        chosen = False
     else:
         # Let's do some picking
-        chosen = __mostPopular(lemmata)
-        if chosen['count'] == 0:
-            # All the words had zero frequency
-            chosen = default
+        chosen = __mostPopular(synset_ranks)
+        if chosen[1] == 0:
+            # All the synsets had zero frequency
+            chosen = False
     return chosen
 
-def __mostPopular(lemmata):
+def __mostPopular(synset_ranks):
     max_freq = -1
-    for lemma in lemmata:
-        if lemma['count'] > max_freq:
-            most_popular = lemma
-            max_freq = lemma['count']
+    for synset in synset_ranks:
+        if synset[1] > max_freq:
+            most_popular = synset
+            max_freq = synset[1]
     return most_popular
 
 def __scrub(word):
@@ -117,6 +145,6 @@ if (__name__ == "__main__"):
              "RB", "RBR"]
     nouns2 = ["ugly", "horrific", "quintessential", "salacious", "lewd", "undignified", "wanton"]
     codes2 = ["JJ", "JJ", "JJ", "JJ", "JJ", "JJ", "JJ"]
-    for word, code in zip(nouns, codes):
+    for word, code in zip(nouns2, codes2):
         print(word + " -> " + syn(word, code) + "\n")
 
