@@ -1,0 +1,3 @@
+$(function() {
+    ace.edit("editor");
+});

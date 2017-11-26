@@ -1,0 +1,26 @@
+.full-height, body, html {
+    height: 100%;
+}
+
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+}
+
+.box-main {
+  flex: 1 1 auto;
+}
+
+.box-foot {
+  flex: 0 1 40px;
+}
+
+.main-controls {
+  float: right;
+}
+
+.container-fluid {
+  height: 80vh;
+}
