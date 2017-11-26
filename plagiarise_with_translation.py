@@ -7,8 +7,25 @@ key = f.read()
 f.close()
 
 def refactor(essay):
+    # Dissect. Split up into sentences  but preserve the paragraphing
+    # break down the sentences into a tuple with ("sentence", "trailing whitespace")
+    # and assemble these into a list
+    splts = re.split("([\.?!]\s+)", essay)
+    sentences = []
+    for first, second in zip(splts[0::2], splts[1::2]):
+        sentences.append((first, second))
+    # Handle the final one - dont care if we loose whitespace here.
+    sentences.append((splts[-1], ""))
+    # Do something with the sentences
+    for sentence in sentences:
+        txt = sentence[0]
 
-    return essay
+    # Reassemble
+    new_essay = ""
+    for sentence in sentences:
+        new_essay += sentence[0]
+        new_essay += sentence[1]
+    return new_essay
 
 def plagiarise_with_translation(essay):
 
@@ -23,8 +40,8 @@ def plagiarise_with_translation(essay):
 
 if (__name__ == "__main__"):
     #read in file
-    f = open('input/Emmas_essay.txt', mode='r')
+    f = open('input/it_essay.txt', mode='r')
     essay = f.read()
     f.close()
-    shuffledessay = plagiarise_with_translation(essay)
-    print(shuffledessay)
+    #shuffledessay = plagiarise_with_translation(essay)
+    refactor(essay)

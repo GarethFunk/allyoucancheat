@@ -1,22 +1,20 @@
-Introduction
-The purpose of this proposal is to justify the issue of Data Security. Proof to questions such as: how secure is our data? What measures can we take to secure personal and company data? Can we be secure online? Data Security stems from as far back as the time of Julius Caesar when Caesar cipher was invented in 50BC. Information security had much advancement in World War Two. With rapid advancements in telecommunications at the end of the 20th century, in areas such as computer hardware and software.
+The purpose of this proposal is to justify the issue of Data Security. Data Security stems from as far back as the time of Julius Caesar when Caesar cipher was invented in 50BC. Information security had much advancement in World War Two. With rapid advancements in telecommunications at the end of the 20th century, in areas such as computer hardware and software.
 
 Within this document, issues such as how secure data really is, the measures taken to make it secure and what companies are doing about it shall be looked at. Also the issue of online security shall be discussed.
 
-Data Security
 Company information is vital to people inside and outside of a company. Information that is confidential such as bank transactions and credit card details need to be protected. Also information on new products, customer information and marketing strategies are also classed as confidential and need to be protected. If this information was lost or stolen and ended up in the wrong hands, it could become very damaging to the company in question. That is why data security is important as it protects against theft and misuse.
 
-The threat of theft can be done through hacking, freaking and viruses. Security of business data can also be attached from within a company through a disgruntled employee, or an employee who has recently quit and gone to a competitor (Stroman 2004).
+The threat of theft can be done through hacking, freaking and viruses. Security of business data can also be attached from within a company through a disgruntled employee, or an employee who has recently quit and gone to a competitor.
 
 
 There are a number of steps that can be taken to protect both personal and the company's data, these include:
 
 Audit Logs - This method means a record of who has been using the computer system is recorded. The name of the user, the time accessed and the files that were accessed is also recorded.
 
-Codes - Codes such as encryption (Salomon 2003) codes of data files are a common means of protection. The files are encrypted so that without the correct decryption procedure, if they get in the wrong hand the files only appear as random symbols.
+Codes - Codes such as encryption codes of data files are a common means of protection. The files are encrypted so that without the correct decryption procedure, if they get in the wrong hand the files only appear as random symbols.
 
 Backups - In case of the event of viruses getting through, a common method is to do backup of system files on a regular basis, normally done daily.
 
 Firewalls - Having a firewall system installed protects any from such viruses getting access to the companies servers.
 
-Data Security is safe and reliable, but there can be problems. With encryption there are problems** (Damgard 1999). Modern cryptography is used for encryption, where a secure protocol or scheme is selected. The problem with protocol design is mainly that it can be insecure, for example is the Electronic Code-Book (ECB) encryption mode. The problem has been made through the work of Goldwasser and Micali.With web security (Thurasingham 2001) web security and privacy can be done through access control (Farkas 2004) of XML, which is essentially done through intrusion detection techniques.
+Data Security is safe and reliable, but there can be problems. With encryption there are problem. Modern cryptography is used for encryption, where a secure protocol or scheme is selected. The problem with protocol design is mainly that it can be insecure, for example is the Electronic Code-Book encryption mode. The problem has been made through the work of Goldwasser and Micali. With web security, web security and privacy can be done through access control of XML, which is essentially done through intrusion detection techniques.
