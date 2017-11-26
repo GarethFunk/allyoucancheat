@@ -3,7 +3,9 @@ import json
 import matplotlib.pyplot as plt
 import uuid
 
-def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode):
+def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode,
+                  xlabel="x", ylabel="y", title="My Fake Data", grid="True", colorofpoints="", loglog="False",
+                  lineofbestfit="False", colorofline="b", linewidth="0.8", orderofline="1"):
 
     if xintervalstyle == "regular":
         x = np.linspace(xlow, xhigh, num=numberofdatapoints)
@@ -22,9 +24,22 @@ def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, i
 
     tempdirname = '/tmp/aycc'
 
-    plt.plot(x, y, "o")
-    plt.xlabel("x")
-    plt.ylabel("y")
+    if colorofpoints == "":
+        settings = "o"
+    else:
+        settings = "".join(["o", colorofpoints])
+
+    plt.plot(x, y, settings)
+
+    if lineofbestfit == "True":
+        plt.plot(np.unique(x), np.poly1d(np.polyfit(x, y, int(orderofline)))(np.unique(x)), color=colorofline, linewidth=linewidth)
+
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+
+    plt.xlim([xlow, xhigh])
+    plt.grid(grid)
+    plt.title(title)
 
     UUID = uuid.uuid1()
 
@@ -38,10 +53,10 @@ def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, i
 if __name__ == "__main__":
     # User defined variables
     xlow = 0
-    xhigh = 5
+    xhigh = 9
     xintervalstyle = "random"  # user puts in either "random" or "regular"
-    numberofdatapoints = 10
-    noiselevel = 0.08  # user defines this with a slider
+    numberofdatapoints = 100
+    noiselevel = 0.12  # user defines this with a slider
     idealcurvecode = "8*x**2 + 5*x + 6"
 
-    print(generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode))
+    print(generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode, lineofbestfit="True"))
