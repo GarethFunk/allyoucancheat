@@ -1,5 +1,7 @@
 import numpy as np
 import json
+import matplotlib.pyplot as plt
+import uuid
 
 def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode):
 
@@ -18,7 +20,20 @@ def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, i
     data = list(zip(x, y))
     jsonobject = json.dumps(data)
 
-    return jsonobject
+    tempdirname = '/tmp/aycc'
+
+    plt.plot(x, y, "o")
+    plt.xlabel("x")
+    plt.ylabel("y")
+
+    UUID = uuid.uuid1()
+
+    strlist = [tempdirname, "/", str(UUID), ".png"]
+    imagepath = ''.join(strlist)
+    plt.savefig(imagepath)
+    plt.close()
+
+    return jsonobject, imagepath
 
 if __name__ == "__main__":
     # User defined variables
