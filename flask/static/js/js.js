@@ -39,8 +39,20 @@ $(function() {
                 'noise-level': $("#noise-level").val()
             },
             success: function(r) {
-                console.log(JSON.parse(r));
+                $("#data-box").html("");
+                var resi = JSON.parse(r);
 
+                var res = resi[0];
+                var imgPath = resi[1];
+                $.each(res, function(i, r) {
+                    var row = $("<tr>");
+                    row.append($("<td>").html(r[0].toFixed(3)));
+                    row.append($("<td>").html(r[1].toFixed(3)));
+                    $("#data-box").append(row);
+                });
+
+                $("#graph-img").attr("src", "/g/" + imgPath);
+                $("#data-out").show();
             }
         });
     });

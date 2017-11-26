@@ -33,3 +33,11 @@
 .slider-selection {
 	background: #BABABA;
 }
+
+#get-data {
+    float: right;
+}
+
+#data-out {
+    display: none;
+}

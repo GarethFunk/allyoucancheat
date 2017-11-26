@@ -51,25 +51,29 @@
         </nav>
 
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-            <h1>Fake My Data</h1>
+            <h1>Fake My Data
+                <button id="get-data" class="btn btn-primary"><i class="fa fa-line-chart" aria-hidden="true"></i>
+                    Generate Graph
+                </button>
+            </h1>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="graph-name">Graph Name</label>
                         <input type="text" class="form-control" id="graph-name" aria-describedby="name-help"
-                               placeholder="My Fake Data">
+                               value="My Fake Data">
                         <small id="name-help" class="form-text text-muted">Title for the graph</small>
                     </div>
                     <div class="form-group">
                         <label for="ideal-curve">Ideal Curve</label>
-                        <input type="text" class="form-control" id="ideal-curve" placeholder="5x + 32">
+                        <input type="text" class="form-control" id="ideal-curve" value="5*x + 32">
                     </div>
                     <div class="form-group">
                         <label for="x-range">X Range</label>
                         <div class="input-group" id="x-range">
-                            <input id="x-min" type="text" class="form-control" aria-label="min. x" placeholder="5">
+                            <input id="x-min" type="text" class="form-control" aria-label="min. x" value="5">
                             <span class="input-group-addon">to</span>
-                            <input id="x-max" type="text" class="form-control" aria-label="min. y" placeholder="50">
+                            <input id="x-max" type="text" class="form-control" aria-label="min. y" value="50">
                         </div>
                     </div>
                     <div class="form-group">
@@ -81,7 +85,7 @@
                     </div>
                     <div class="form-group">
                         <label for="num-points">Number of Data Points</label>
-                        <input type="text" class="form-control" id="num-points" placeholder="15">
+                        <input type="text" class="form-control" id="num-points" value="15">
                     </div>
                     <div class="form-group">
                         <label for="noise-level">Noise Level</label>
@@ -90,7 +94,28 @@
                                    data-slider-max="1" data-slider-step="0.01" data-slider-value="0.5"/>
                         </div>
                     </div>
-                    <button id="get-data" class="btn btn-primary"><i class="fa fa-line-chart" aria-hidden="true"></i> Generate</button>
+                </div>
+                <div class="col-lg-6" id="data-out">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <img id="graph-img" style="max-width: 100%;"/>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="max-height: 400px; overflow-y: auto;">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>x</th>
+                                    <th>y</th>
+                                </tr>
+                                </thead>
+                                <tbody id="data-box">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
 import json
 
 from fakemydata.generate_data import generate_data
@@ -28,18 +28,24 @@ def fakemydata():
 
 @app.route('/getdata', methods=['POST'])
 def generatedata():
-    data, imgpath = generate_data(float(request.form["x-min"]),
+    return json.dumps(generate_data(float(request.form["x-min"]),
                          float(request.form["x-max"]),
                          request.form["x-interval-style"],
                          int(request.form["num-points"]),
                          float(request.form["noise-level"]),
-                         request.form["ideal-curve"])
-    return data
+                         request.form["ideal-curve"]))
 
 
 @app.route('/sentenceview')
 def sentenceview():
     return render_template('sentenceview.html')
+
+@app.route('/g/<graphpath>')
+def getgraph(graphpath):
+    in_file = open('/tmp/aycc/' + graphpath, "rb")
+    data = in_file.read()
+    in_file.close()
+    return Response(data, mimetype='image/png')
 
 
 @app.route('/plagiarise', methods=['POST'])
