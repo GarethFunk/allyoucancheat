@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 import json
-from fakemydata.generate_data import generate_data
 from plagiarise_with_translation import plagiarise_with_translation
 
 app = Flask(__name__)
@@ -18,7 +17,7 @@ def fakemydata():
     #numberofdatapoints
     #noiselevel - a value between 0 and 1, as determined by user on a sliding scale
     #idealcurvecode - python code for y
-    data_json = generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode)
+    # data_json = generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode)
     #json is a list of lists (each sublist has one x and one y in it)
     return data_json, render_template('fakemydata.html')
 

@@ -4,7 +4,7 @@ function plagiarise(essay) {
         url: "/plagiarise",
         data: {'essay': essay},
         success: function(r) {
-            update(JSON.parse(r).join(". "));
+            update(JSON.parse(r));
 
         }
     });
