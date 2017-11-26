@@ -4,7 +4,7 @@ import uuid
 
 def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, idealcurvecode,
                   xlabel="x", ylabel="y", title="My Fake Data", grid="True", colorofpoints="", loglog="False",
-                  lineofbestfit="False", colorofline="b", linewidth="0.8", orderofline="1"):
+                  lineofbestfit="False", colorofline="b", linewidth="0.8", orderofline="1", monotonic=False):
 
     if xintervalstyle == "regular":
         x = np.linspace(xlow, xhigh, num=numberofdatapoints)
@@ -17,6 +17,9 @@ def generate_data(xlow, xhigh, xintervalstyle, numberofdatapoints, noiselevel, i
     noise = np.random.normal(0, noiseSD, numberofdatapoints)
 
     y = ywithoutnoise + noise
+
+    if monotonic:
+        y.sort()
 
     data = list(zip(x, y))
 

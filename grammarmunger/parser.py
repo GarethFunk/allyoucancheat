@@ -1,8 +1,10 @@
 from nltk.parse.stanford import StanfordDependencyParser
 import re
 
-dependency_parser = StanfordDependencyParser(path_to_jar='stanford-parser/stanford-parser.jar',
-                                             path_to_models_jar='stanford-parser/stanford-parser-3.8.0-models.jar',
+from synon.synon import syn
+
+dependency_parser = StanfordDependencyParser(path_to_jar='grammarmunger/stanford-parser/stanford-parser.jar',
+                                             path_to_models_jar='grammarmunger/stanford-parser/stanford-parser-3.8.0-models.jar',
                                              corenlp_options='-outputFormatOptions includePunctuationDependencies')
 
 
@@ -76,8 +78,14 @@ def paraphrase_with_structure_maps(sentence):
     result = dependency_parser.raw_parse(sent)
     graph = next(result)
     tree = node_to_tree(graph.root, graph, 0)
+    if flatten_tree(tree) != sent:
+        return sentence
     re_plan_unit(tree)
-    return post_process(flatten_tree(tree))
+    re_lex(tree)
+    str = post_process(flatten_tree(tree))
+    print(sent)
+    print(str)
+    return str
 
 
 def get_node(id, graph):
@@ -119,6 +127,12 @@ def get_dependency_from_pos(node, pos):
             return child
     return None
 
+
+def re_lex(node):
+    for child in node.children:
+        re_lex(child)
+
+    node.value = (syn(node.value[0], node.value[1]), node.value[1])
 
 def re_plan_unit(node):
     for child in node.children:
@@ -174,24 +188,3 @@ def post_process(text):
 
 def format_node(node):
     return node.value[0]
-
-
-# Read in file
-f = open('../input/Emmas_essay.txt', mode='r')
-essay = f.read()
-f.close()
-
-#Preprocessing
-essay = essay.replace(".\"", "\".").replace("...", ".").replace("etc.", "etc").replace(" e.g.", ":").replace("i.e.", ":").replace("St.", "St")
-essay = essay.replace("p.1", "p1").replace("p.2", "p2").replace("p.3", "p3").replace("p.4", "p4").replace("p.5", "p5").replace("p.6", "p6").replace("p.7", "p7").replace("p.8", "p8").replace("p.9", "p9")
-
-# Split into sentences
-sentences = re.compile("\.|\n").split(essay)
-
-for sent in sentences:
-    sent = sent.strip() + "."
-    out = paraphrase_with_structure_maps(sent)
-    if out != sent:
-        print(sent)
-        print(out)
-        print("-")

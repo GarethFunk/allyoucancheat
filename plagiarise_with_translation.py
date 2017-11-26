@@ -2,6 +2,8 @@ import re
 import googletranslate.translate_shuffle_functions as tr
 
 # Read in key.txt
+from grammarmunger.parser import paraphrase_with_structure_maps
+
 f = open('key.txt', 'r')
 key = f.read()
 f.close()
@@ -13,12 +15,12 @@ def refactor(essay):
     splts = re.split("([\.?!]\s+)", essay)
     sentences = []
     for first, second in zip(splts[0::2], splts[1::2]):
-        sentences.append((first, second))
+        sentences.append([first, second])
     # Handle the final one - dont care if we loose whitespace here.
-    sentences.append((splts[-1], ""))
+    sentences.append([splts[-1], ""])
     # Do something with the sentences
     for sentence in sentences:
-        txt = sentence[0]
+        sentence[0] = paraphrase_with_structure_maps(sentence[0])
 
     # Reassemble
     new_essay = ""

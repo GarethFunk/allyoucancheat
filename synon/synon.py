@@ -41,7 +41,7 @@ def syn(word, code='NN'):
         # Inflect the word again
         new_word = __inflector(lemma['name'], pos, code)
     else:
-        new_word = "ignored"
+        new_word = word
     return new_word
 
 

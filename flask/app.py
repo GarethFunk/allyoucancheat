@@ -33,7 +33,8 @@ def generatedata():
                          request.form["x-interval-style"],
                          int(request.form["num-points"]),
                          float(request.form["noise-level"]),
-                         request.form["ideal-curve"]))
+                         request.form["ideal-curve"],
+                         title=request.form["graph-name"]))
 
 
 @app.route('/sentenceview')
