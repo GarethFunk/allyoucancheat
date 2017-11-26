@@ -4,6 +4,7 @@ function plagiarise(essay) {
         url: "/plagiarise",
         data: {'essay': essay},
         success: function(r) {
+            $(".spinner").hide();
             update(JSON.parse(r));
 
         }
@@ -16,6 +17,7 @@ function update(essay) {
 
 $(function() {
     $("#pl-btn").click(function() {
+        $(".spinner").show();
         plagiarise(editor.getValue());
     });
 

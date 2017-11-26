@@ -79,13 +79,21 @@ def paraphrase_with_structure_maps(sentence):
     graph = next(result)
     tree = node_to_tree(graph.root, graph, 0)
     if flatten_tree(tree) != sent:
+        re_lex(tree)
         return sentence
     re_plan_unit(tree)
+    tree = get_top(tree)
     re_lex(tree)
     str = post_process(flatten_tree(tree))
     print(sent)
     print(str)
     return str
+
+
+def get_top(tree):
+    if tree.parent is None:
+        return tree
+    return get_top(tree.parent)
 
 
 def get_node(id, graph):
@@ -131,8 +139,9 @@ def get_dependency_from_pos(node, pos):
 def re_lex(node):
     for child in node.children:
         re_lex(child)
-
+    print(node)
     node.value = (syn(node.value[0], node.value[1]), node.value[1])
+
 
 def re_plan_unit(node):
     for child in node.children:
@@ -146,6 +155,41 @@ def re_plan_unit(node):
         possessor.left = False
         possessor.children.insert(0, TreeNode(True, ("of", "IN"), "case", [], possessor))
         node.children.insert(find_det_point(node), TreeNode(True, ("the", "DET"), "det", [], node))
+
+    if has_dependency(node, "cop"):
+        cop = get_dependency(node, "cop")
+        if cop.value[0] == 'is':
+            parent = node.parent
+            other = get_dependency(node, "nsubj")
+            rdet = get_dependency(node, "det")
+            ldet = get_dependency(other, "det")
+
+            if ((rdet is not None and rdet.value[0] == "the") or \
+                    (ldet is not None and ldet.value[0] == "the")) and \
+                    not (rdet is not None and (rdet.value[0] != "the")) or \
+                    (ldet is not None and (ldet.value[0] != "the")):
+                other.children.insert(0, cop)
+                node.children.remove(cop)
+                cop.parent = other
+
+                rel = other.relation
+                other.relation = node.relation
+                node.relation = rel
+
+                other.children.insert(0, node)
+                node.children.remove(other)
+                par = node.parent
+                node.parent = other
+                other.parent = par
+
+                l = other.left
+                other.left = node.left
+                node.left = l
+
+                if parent is not None:
+                    index = parent.children.index(node)
+                    parent.children.insert(index, other)
+                    parent.children.remove(node)
 
 
 def find_det_point(node):
@@ -181,9 +225,7 @@ def pre_process(text):
 
 
 def post_process(text):
-    if text == "":
-        return "."
-    return text[0].upper() + text[1:] + "."
+    return text[0].upper() + text[1:]
 
 
 def format_node(node):
